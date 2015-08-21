@@ -1390,7 +1390,7 @@ class VeritransBni extends PaymentModule
 
 	function insertTransaction($customer_id, $id_cart, $id_currency, $request_id, $token_merchant)
 	{
-		$sql = 'INSERT INTO `'._DB_PREFIX_.'VN_transaction`
+		$sql = 'INSERT INTO `'._DB_PREFIX_.'vt_transaction`
 				(`id_customer`, `id_cart`, `id_currency`, `request_id`, `token_merchant`)
 				VALUES ('.(int)$customer_id.',
 					'.(int)$id_cart.',
@@ -1403,7 +1403,7 @@ class VeritransBni extends PaymentModule
 	function getTransaction($request_id)
 	{
 		$sql = 'SELECT *
-			FROM `'._DB_PREFIX_.'VN_transaction`
+			FROM `'._DB_PREFIX_.'vt_transaction`
 			WHERE `request_id` = \''.$request_id.'\'';
 		$result = Db::getInstance()->getRow($sql);
 		return $result; 
