@@ -933,7 +933,7 @@ class VeritransBni extends PaymentModule
 		}else{
 			$product = 'multiple_product';
 		}
-		if (Configuration::get('VN_ENABLE_INSTALLMENT') == 'all_product') 
+		if (Configuration::get('VN_ENABLE_INSTALLMENT') == 'all_product' && $num_product == 1) 
 			$product = 'installment';
 		
 		$this->context->smarty->assign(array(

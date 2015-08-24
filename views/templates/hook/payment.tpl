@@ -3,7 +3,7 @@
   <div class="col-xs-12 col-md-6">
       <p class="payment_module">
         <a class="bankwire">
-          <span>*Please note: BNI Installment payment is not supported for multiple products in Cart.</span>
+          <img src="{$this_path}vtwebbni.png" alt="{l s='BNI Installment' mod='veritransbni'}" /><br/><span>*Please note: BNI Installment payment is only allowed for one product type on your cart</span>
         </a>
       </p>
   </div>
@@ -14,7 +14,7 @@
   <div class="col-xs-12 col-md-6">
       <p class="payment_module">
         <a class="bankwire">
-          <span>*Product doesn't support BNI installment as payment.</span>
+          <img src="{$this_path}vtwebbni.png" alt="{l s='BNI Installment' mod='veritransbni'}" /><br/><span>*Product doesn't support BNI installment as payment.</span>
         </a>
       </p>
   </div>
