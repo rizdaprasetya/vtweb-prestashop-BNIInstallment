@@ -917,7 +917,7 @@ class VeritransBni extends PaymentModule
 
 		$cart = $this->context->cart;
 
-		$product = 'single_product';
+		$product = 'installment';
 		$products_cart = $cart->getProducts();
 		$num_product = count($products_cart);
 		if($num_product == 1){
@@ -933,7 +933,9 @@ class VeritransBni extends PaymentModule
 		}else{
 			$product = 'multiple_product';
 		}
-
+		if (Configuration::get('VN_ENABLE_INSTALLMENT') == 'all_product') 
+			$product = 'installment';
+		
 		$this->context->smarty->assign(array(
 			'product'=> $product,
 			'cart' => $cart,
