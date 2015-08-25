@@ -56,8 +56,8 @@ class VeritransBni extends PaymentModule
 			'VN_ENVIRONMENT',
 			'VN_SANITIZED',
 			'VN_ENABLE_INSTALLMENT',
-			'ENABLED_BNI_INSTALLMENT',
-			// 'ENABLED_MANDIRI_INSTALLMENT',
+			'VN_ENABLED_BNI_INSTALLMENT',
+			// 'VN_ENABLED_MANDIRI_INSTALLMENT',
 			'VN_INSTALLMENTS_BNI',
 			'VN_INSTALLMENTS_MANDIRI'
 			);
@@ -574,21 +574,21 @@ class VeritransBni extends PaymentModule
 					array(
 						'type' => (version_compare(Configuration::get('PS_VERSION_DB'), '1.6') == -1)?'radio':'switch',
 						'label' => 'BNI Installment',
-						'name' => 'ENABLED_BNI_INSTALLMENT',						
+						'name' => 'VN_ENABLED_BNI_INSTALLMENT',						
 						'is_bool' => true,
 						'values' => array(
 							array(
-								'id' => 'ENABLED_BNI_INSTALLMENT_on',
+								'id' => 'VN_ENABLED_BNI_INSTALLMENT_on',
 								'value' => 1,
 								'label' => 'Yes'
 								),
 							array(
-								'id' => 'ENABLED_BNI_INSTALLMENT_off',
+								'id' => 'VN_ENABLED_BNI_INSTALLMENT_off',
 								'value' => 0,
 								'label' => 'No'
 								)
 							),
-						//'class' => 'ENABLED_BNI_INSTALLMENT'
+						//'class' => 'VN_ENABLED_BNI_INSTALLMENT'
 						),
 					array(
 						'type' => 'text',
@@ -601,21 +601,21 @@ class VeritransBni extends PaymentModule
 					// array(
 					// 	'type' => (version_compare(Configuration::get('PS_VERSION_DB'), '1.6') == -1)?'radio':'switch',
 					// 	'label' => 'MANDIRI Installment',
-					// 	'name' => 'ENABLED_MANDIRI_INSTALLMENT',						
+					// 	'name' => 'VN_ENABLED_MANDIRI_INSTALLMENT',						
 					// 	'is_bool' => true,
 					// 	'values' => array(
 					// 		array(
-					// 			'id' => 'ENABLED_MANDIRI_INSTALLMENT_on',
+					// 			'id' => 'VN_ENABLED_MANDIRI_INSTALLMENT_on',
 					// 			'value' => 1,
 					// 			'label' => 'Yes'
 					// 			),
 					// 		array(
-					// 			'id' => 'ENABLED_MANDIRI_INSTALLMENT_off',
+					// 			'id' => 'VN_ENABLED_MANDIRI_INSTALLMENT_off',
 					// 			'value' => 0,
 					// 			'label' => 'No'
 					// 			)
 					// 		),
-					// 	//'class' => 'ENABLED_MANDIRI_INSTALLMENT'
+					// 	//'class' => 'VN_ENABLED_MANDIRI_INSTALLMENT'
 					// 	),
 					// array(
 					// 	'type' => 'text',
@@ -740,7 +740,7 @@ class VeritransBni extends PaymentModule
 		// 			array(
 		// 				'type' => 'switch',
 		// 				'label' => 'BNI Installment',
-		// 				'name' => 'ENABLED_BNI_INSTALLMENT',						
+		// 				'name' => 'VN_ENABLED_BNI_INSTALLMENT',						
 		// 				//'is_bool' => true,
 		// 				'values' => array(
 		// 					array(
@@ -769,7 +769,7 @@ class VeritransBni extends PaymentModule
 		// 			array(
 		// 				'type' => 'switch',
 		// 				'label' => 'MANDIRI Installment',
-		// 				'name' => 'ENABLED_MANDIRI_INSTALLMENT',						
+		// 				'name' => 'VN_ENABLED_MANDIRI_INSTALLMENT',						
 		// 				'is_bool' => true,
 		// 				'values' => array(
 		// 					array(
@@ -917,6 +917,7 @@ class VeritransBni extends PaymentModule
 
 		$cart = $this->context->cart;
 
+		// check cart's products only display payment if single product & installment all/certain
 		$product = 'installment';
 		$products_cart = $cart->getProducts();
 		$num_product = count($products_cart);
@@ -935,7 +936,9 @@ class VeritransBni extends PaymentModule
 		}
 		if (Configuration::get('VN_ENABLE_INSTALLMENT') == 'all_product' && $num_product == 1) 
 			$product = 'installment';
-		
+		if (Configuration::get('VN_ENABLE_INSTALLMENT') == 'off' || !Configuration::get('VN_ENABLED_BNI_INSTALLMENT')) 
+			$product = 'installment_off';
+
 		$this->context->smarty->assign(array(
 			'product'=> $product,
 			'cart' => $cart,
@@ -1215,8 +1218,8 @@ class VeritransBni extends PaymentModule
 			$gross_amount += $item['price'] * $item['quantity'];
 		}	
 		
-		$isBniInstallment = Configuration::get('ENABLED_BNI_INSTALLMENT') == 1;
-		// $isMandiriInstallment = Configuration::get('ENABLED_MANDIRI_INSTALLMENT') == 1;
+		$isBniInstallment = Configuration::get('VN_ENABLED_BNI_INSTALLMENT') == 1;
+		// $isMandiriInstallment = Configuration::get('VN_ENABLED_MANDIRI_INSTALLMENT') == 1;
 		$isMandiriInstallment = false;
 		$warning_redirect = false;
 		$fullPayment = true;
