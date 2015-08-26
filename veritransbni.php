@@ -936,7 +936,7 @@ class VeritransBni extends PaymentModule
 		}else{
 			$product = 'multiple_product';
 		}
-		if (Configuration::get('VN_ENABLE_INSTALLMENT') == 'all_product' && $num_product == 1) 
+		if (Configuration::get('VN_ENABLE_INSTALLMENT') == 'all_product' /*&& $num_product == 1*/) 
 			$product = 'installment';
 		if (Configuration::get('VN_ENABLE_INSTALLMENT') == 'off' || !Configuration::get('VN_ENABLED_BNI_INSTALLMENT')) 
 			$product = 'installment_off';
