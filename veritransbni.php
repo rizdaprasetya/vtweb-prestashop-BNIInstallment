@@ -1137,7 +1137,7 @@ class VeritransBni extends PaymentModule
 		
    //  	if (Configuration::get('VN_3D_SECURE') == 'on' || Configuration::get('VN_3D_SECURE') == 1)
 			// Veritrans_Config::$is3ds = true;		
-		Veritrans_Config::$is3ds = false;		
+		Veritrans_Config::$is3ds = true;		
 
 		// if (Configuration::get('VN_SANITIZED') == 'on' || Configuration::get('VN_SANITIZED') == 1)
 			Veritrans_Config::$isSanitized = false;
